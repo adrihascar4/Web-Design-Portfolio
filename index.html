@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Designer Resume</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --orange: #ff5a1f;
+      --hot-pink: #ff2bbf;
+      --magenta: #d91cff;
+      --violet: #7b61ff;
+      --ink: #17171c;
+      --soft-ink: #555563;
+      --line: #e9e6ee;
+      --card: #ffffff;
+      --wash: #faf8fb;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      background: var(--wash);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    .upload-strip {
+      max-width: 1120px;
+      margin: 28px auto 20px;
+      padding: 36px 24px;
+      text-align: center;
+      color: #8b8794;
+      border: 2px dashed #d9d2df;
+      border-radius: 18px;
+      background: #fff;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 360px;
+      padding: 70px 8vw 62px;
+      color: white;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 45%, rgba(255, 120, 40, 0.95), transparent 32%),
+        radial-gradient(circle at 48% 40%, rgba(255, 26, 205, 0.95), transparent 38%),
+        radial-gradient(circle at 82% 46%, rgba(115, 92, 255, 0.95), transparent 42%),
+        linear-gradient(100deg, var(--orange), var(--hot-pink), var(--violet));
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.75'/%3E%3C/svg%3E");
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .photo-wrap {
+      width: 146px;
+      height: 146px;
+      border: 6px solid white;
+      border-radius: 50%;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 22px 60px rgba(41, 20, 60, 0.22);
+      margin-bottom: 24px;
+    }
+
+    .photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 20px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: white;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(48px, 8vw, 88px);
+      line-height: 0.95;
+      letter-spacing: -0.07em;
+      font-weight: 800;
+    }
+
+    .role {
+      margin-top: 16px;
+      font-size: 15px;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .hero-summary {
+      max-width: 660px;
+      margin-top: 24px;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 58px 28px 70px;
+    }
+
+    .section {
+      margin-bottom: 54px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 26px;
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: 17px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+    }
+
+    .section-header::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: var(--line);
+    }
+
+    .overview {
+      max-width: 880px;
+      font-size: 18px;
+      color: var(--soft-ink);
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 54px;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 12px;
+      top: 6px;
+      bottom: 6px;
+      width: 1px;
+      background: var(--line);
+    }
+
+    .job {
+      position: relative;
+      padding-bottom: 34px;
+      margin-bottom: 34px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .job:last-child {
+      border-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    .job::before {
+      content: "";
+      position: absolute;
+      left: -48px;
+      top: 6px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--orange), var(--hot-pink), var(--violet));
+      box-shadow: 0 0 0 7px #fff;
+    }
+
+    .job-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 22px;
+      align-items: baseline;
+      margin-bottom: 14px;
+    }
+
+    .job h3 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.035em;
+    }
+
+    .date {
+      white-space: nowrap;
+      color: var(--soft-ink);
+      font-size: 14px;
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    li {
+      margin: 8px 0;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(233, 230, 238, 0.9);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 20px 55px rgba(57, 32, 70, 0.07);
+    }
+
+    .card.wide {
+      grid-column: span 2;
+    }
+
+    .card h3 {
+      margin: 0 0 18px;
+      font-size: 15px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+    }
+
+    .accent {
+      color: var(--hot-pink);
+      font-weight: 800;
+    }
+
+    .mini-title {
+      margin: 20px 0 8px;
+      font-weight: 800;
+      color: var(--hot-pink);
+    }
+
+    .contact-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 44px;
+      color: var(--soft-ink);
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .contact-item {
+      padding: 14px;
+      background: white;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        padding: 54px 28px;
+      }
+
+      .job-top,
+      .contact-bar {
+        display: block;
+      }
+
+      .date {
+        display: block;
+        margin-top: 6px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .card.wide {
+        grid-column: span 1;
+      }
+
+      .contact-item {
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+
+  <header class="hero">
+    <div class="hero-content">
+      <div class="photo-wrap">
+        <!-- Replace the src below with your real profile picture file path or image URL. -->
+        <!-- Example: <img src="profile-picture.jpg" alt="Profile picture" /> -->
+        <div class="photo-placeholder">Profile Picture</div>
+      </div>
+      <h1>Your Name</h1>
+      <div class="role">Web Designer</div>
+      <p class="hero-summary">
+        Web Designer with 8+ years of experience designing responsive, conversion-focused websites that improve user experience while driving conversions and revenue.
+      </p>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="section-header">
+        <h2>Overview</h2>
+      </div>
+      <p class="overview">
+        Web Designer with 8+ years of experience designing responsive, conversion-focused websites that improve user experience while driving conversions and revenue, owning the full design process from research and wireframing to high-fidelity UI and cross-functional implementation.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>Experience</h2>
+      </div>
+
+      <div class="timeline">
+        <article class="job">
+          <div class="job-top">
+            <h3>Web Designer (E-commerce) – Paragon</h3>
+            <span class="date">March 2024 - Present</span>
+          </div>
+          <ul>
+            <li>Lead end-to-end UI/UX design for the e-commerce website, creating high-fidelity mockups and responsive layouts that improved user experience and increased engagement by 20%.</li>
+            <li>Designed high-converting landing pages and campaign experiences for product launches, contributing to an increase in conversion rate by 17% and revenue growth of 5%.</li>
+            <li>Conducted UX analysis using heatmaps, click maps, post-purchase surveys, and WCAG accessibility audits, implementing improvements that reduced user friction and lowered bounce rate by 10%.</li>
+            <li>Managed end-to-end product launches, including merchandising strategy and PDP optimization, supporting successful releases and increasing sales performance by 7%.</li>
+            <li>Collaborated with developers and cross-functional teams to implement complex UI solutions, improving delivery efficiency and reducing revisions.</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <div class="job-top">
+            <h3>Web Designer – White Shark Media</h3>
+            <span class="date">February 2022 - March 2024</span>
+          </div>
+          <ul>
+            <li>Led the redesign of the main corporate website, delivering high-fidelity Figma mockups and a responsive experience that improved user engagement by 8%.</li>
+            <li>Built and implemented a scalable design system including typography, color, and UI components, ensuring consistent branding and improving team efficiency.</li>
+            <li>Designed conversion-focused landing pages for an optimization tool and multi-industry campaigns, increasing conversion rates by 4%.</li>
+            <li>Collaborated with developers, SEO strategists, and cross-functional teams to deliver optimized web experiences.</li>
+            <li>Developed website designs aligned with brand and content strategy, contributing to improved digital presence and reducing bounce rate by 10%.</li>
+          </ul>
+        </article>
+
+        <article class="job">
+          <div class="job-top">
+            <h3>Graphic Designer – White Shark Media</h3>
+            <span class="date">July 2017 - February 2022</span>
+          </div>
+          <ul>
+            <li>Led and maintained the company-wide visual brand identity across digital channels, ensuring consistency and strengthening brand recognition.</li>
+            <li>Increased engagement across social media, blogs, and YouTube by creating high performing thumbnails and visual assets optimized for click-through rate, achieving 25% increase in CTR.</li>
+            <li>Designed marketing and sales collateral like newsletters, pitch decks, infographics, one-pagers, and proposals to support campaigns and business development.</li>
+            <li>Developed visual branding and creative direction for events, enhancing audience engagement and brand visibility.</li>
+            <li>Designed digital display ads for paid media campaigns, improving ad performance and achieving a 15% increase in total conversion rate.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section cards">
+      <article class="card">
+        <h3>Certifications</h3>
+        <p><span class="accent">Responsive Web Design in Adobe XD</span><br />Google (Coursera)</p>
+        <p><span class="accent">Introduction to Coding SheCodes</span><br />September 2020 - October 2020<br />Learned the basics of HTML, JavaScript and CSS.</p>
+      </article>
+
+      <article class="card">
+        <h3>Skills</h3>
+        <div class="mini-title">Technical Tools</div>
+        <ul>
+          <li>Adobe Creative Suite (Photoshop, Illustrator)</li>
+          <li>Figma</li>
+          <li>Replo (e-commerce landing pages)</li>
+          <li>Unbounce (lead generation landing pages)</li>
+          <li>HTML, CSS, JavaScript (basic front-end understanding for design implementation)</li>
+        </ul>
+        <div class="mini-title">Design</div>
+        <ul>
+          <li>Web Design, UX/UI Design, Wireframing, Prototyping</li>
+          <li>Responsive Design</li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>Languages</h3>
+        <ul>
+          <li>Spanish - native</li>
+          <li>English - B2</li>
+        </ul>
+      </article>
+
+      <article class="card wide">
+        <h3>Education</h3>
+        <p><span class="accent">Universidad Americana UAM - College</span><br />January 2012 - July 2017, Managua, Nicaragua</p>
+        <p>Bachelor’s Degree in Visual Design and Communication</p>
+      </article>
+    </section>
+
+    <div class="contact-bar">
+      <div class="contact-item">youremail@email.com</div>
+      <div class="contact-item">+505 1234 5678</div>
+      <div class="contact-item">Managua, Nicaragua</div>
+      <div class="contact-item">yourwebsite.com</div>
+    </div>
+  </main>
+</body>
+</html>
