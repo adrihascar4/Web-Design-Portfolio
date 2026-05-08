@@ -6,1246 +6,781 @@
   <title>Adriana Hasbani — Sr. Web Designer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;0,900;1,400;1,700&family=Barlow+Condensed:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --black: #080808;
-      --off-black: #0f0f0f;
-      --dark: #161616;
-      --mid: #2a2a2a;
-      --border: #222;
-      --muted: #555;
-      --dim: #888;
-      --light: #bbb;
-      --off-white: #e8e4dc;
-      --white: #f4f0e8;
-      --accent: #c9a96e;
-      --accent2: #e8d5b0;
-      --red: #d44c2d;
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --off-white: #f0ede8;
+      --light-gray: #dedad4;
+      --text: #1a1a1a;
+      --text-muted: #777;
     }
 
     html { scroll-behavior: smooth; }
-
     body {
-      background: var(--black);
-      color: var(--off-white);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
-      line-height: 1.6;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 400;
+      background: var(--off-white);
+      color: var(--text);
       overflow-x: hidden;
       cursor: none;
     }
 
-    /* ─── CUSTOM CURSOR ─────────────────────────────── */
-    .cursor {
-      position: fixed;
-      width: 10px; height: 10px;
-      background: var(--accent);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
+    /* ── CURSOR ─────────────────────────────── */
+    #cur {
+      position: fixed; width: 12px; height: 12px;
+      background: var(--white); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: width .3s, height .3s;
       mix-blend-mode: difference;
     }
-    .cursor-ring {
-      position: fixed;
-      width: 36px; height: 36px;
-      border: 1px solid rgba(201,169,110,0.5);
+    #cur-ring {
+      position: fixed; width: 40px; height: 40px;
+      border: 1.5px solid rgba(255,255,255,0.45);
       border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: transform 0.18s ease, width 0.3s ease, height 0.3s ease;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: width .3s, height .3s;
     }
-    body:hover .cursor { opacity: 1; }
+    @media (hover: none) {
+      #cur, #cur-ring { display: none; }
+      body { cursor: auto; }
+    }
 
-    /* ─── NAV ───────────────────────────────────────── */
+    /* ── NAV ─────────────────────────────────── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 24px 48px;
-      mix-blend-mode: normal;
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 200;
+      display: flex; align-items: center;
+      padding: 28px 44px;
+      mix-blend-mode: difference;
     }
     .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--white);
-      text-decoration: none;
-    }
-    .nav-logo span {
-      color: var(--accent);
+      font-weight: 900; font-size: 17px;
+      letter-spacing: -0.02em;
+      color: var(--white); text-decoration: none;
     }
     .nav-links {
-      display: flex;
-      gap: 36px;
-      list-style: none;
+      display: flex; gap: 44px; list-style: none;
+      position: absolute; left: 50%; transform: translateX(-50%);
     }
     .nav-links a {
-      font-family: 'Syne', sans-serif;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--dim);
-      text-decoration: none;
-      transition: color 0.25s;
+      font-weight: 600; font-size: 13px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--white); text-decoration: none;
+      opacity: 0.8; transition: opacity .2s;
     }
-    .nav-links a:hover { color: var(--white); }
-    .nav-cta {
-      font-family: 'Syne', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--black);
-      background: var(--accent);
-      padding: 10px 22px;
-      text-decoration: none;
-      transition: background 0.25s, color 0.25s;
+    .nav-links a:hover { opacity: 1; }
+    .nav-dots {
+      margin-left: auto;
+      display: flex; gap: 5px; align-items: center;
     }
-    .nav-cta:hover { background: var(--white); }
+    .nav-dots span {
+      display: block; width: 5px; height: 5px;
+      border-radius: 50%; background: var(--white); opacity: 0.8;
+    }
 
-    /* ─── HERO ──────────────────────────────────────── */
+    /* ── HERO ────────────────────────────────── */
     #hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 0 48px 80px;
-      position: relative;
-      border-bottom: 1px solid var(--border);
-      overflow: hidden;
+      position: relative; width: 100%; height: 100vh;
+      overflow: hidden; background: #111;
     }
-    .hero-bg-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
+    #hero-img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      filter: brightness(0.72);
+      transition: transform 12s ease;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(0,0,0,0.15) 0%,
+        rgba(0,0,0,0.05) 45%,
+        rgba(0,0,0,0.40) 100%);
+    }
+
+    /* circular center button */
+    .hero-btn {
+      position: absolute; top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(120px, 18vw, 260px);
-      font-weight: 300;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(201,169,110,0.07);
-      white-space: nowrap;
-      pointer-events: none;
-      user-select: none;
-      letter-spacing: -0.02em;
+      width: 136px; height: 136px; border-radius: 50%;
+      background: var(--white);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-decoration: none; cursor: none; z-index: 2;
+      transition: transform .4s cubic-bezier(.25,.8,.25,1);
     }
-    .hero-tag {
-      font-family: 'Syne', sans-serif;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
+    .hero-btn:hover { transform: translate(-50%,-50%) scale(1.1); }
+    .hero-btn-text {
+      font-weight: 900; font-size: 13px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--black); text-align: center; line-height: 1.3;
     }
-    .hero-tag::before {
-      content: '';
-      display: block;
-      width: 32px;
-      height: 1px;
-      background: var(--accent);
+
+    /* bottom credit */
+    .hero-credit {
+      position: absolute; bottom: 40px; left: 50%;
+      transform: translateX(-50%);
+      text-align: center; z-index: 2;
     }
-    .hero-headline {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(52px, 8vw, 110px);
-      font-weight: 300;
-      line-height: 0.95;
-      letter-spacing: -0.02em;
+    .hero-credit-name {
+      font-weight: 700; font-size: 13px;
+      letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--white);
-      max-width: 900px;
-      margin-bottom: 48px;
     }
-    .hero-headline em {
-      font-style: italic;
-      color: var(--accent);
+    .hero-credit-sub {
+      font-size: 12px; color: rgba(255,255,255,0.55);
+      letter-spacing: 0.06em;
+      margin-top: 4px;
     }
-    .hero-bottom {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
+
+    /* awards strip at bottom-left */
+    .hero-awards {
+      position: absolute; bottom: 40px; left: 44px;
+      z-index: 2; display: flex; flex-direction: column; gap: 6px;
     }
-    .hero-desc {
-      max-width: 380px;
-      font-size: 14px;
-      line-height: 1.8;
-      color: var(--dim);
-    }
-    .hero-scroll {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      font-family: 'Syne', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.18em;
+    .hero-award {
+      font-size: 11px; letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.5);
       text-transform: uppercase;
-      color: var(--muted);
-    }
-    .hero-scroll-line {
-      width: 1px;
-      height: 60px;
-      background: linear-gradient(to bottom, var(--accent), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.3; transform: scaleY(1); }
-      50% { opacity: 1; transform: scaleY(0.6); }
-    }
-    .hero-year {
-      font-family: 'Syne', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      color: var(--muted);
     }
 
-    /* floating accent lines */
-    .hero-line {
-      position: absolute;
-      background: var(--border);
-    }
-    .hero-line-v {
-      width: 1px;
-      height: 100%;
-      top: 0;
-    }
-    .hero-line-v-1 { left: 33.33%; }
-    .hero-line-v-2 { left: 66.66%; }
-
-    /* ─── MARQUEE ───────────────────────────────────── */
-    .marquee-strip {
+    /* ── MARQUEE ─────────────────────────────── */
+    .mq-wrap {
       overflow: hidden;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 18px 0;
-      background: var(--off-black);
+      background: var(--black);
+      padding: 14px 0;
+      border-bottom: 1px solid #1e1e1e;
+    }
+    .mq-inner {
+      display: inline-flex;
+      animation: mq 32s linear infinite;
       white-space: nowrap;
     }
-    .marquee-track {
-      display: inline-flex;
-      gap: 0;
-      animation: marqueeScroll 28s linear infinite;
+    .mq-item {
+      display: inline-flex; align-items: center; gap: 18px;
+      padding: 0 18px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 500; font-size: 11px;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: #484848;
     }
-    .marquee-strip:hover .marquee-track { animation-play-state: paused; }
-    .marquee-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 28px;
-      padding: 0 28px;
-      font-family: 'Syne', sans-serif;
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
+    .mq-dot {
+      width: 3px; height: 3px; border-radius: 50%;
+      background: #484848; flex-shrink: 0;
     }
-    .marquee-item .dot {
-      width: 4px;
-      height: 4px;
-      border-radius: 50%;
-      background: var(--accent);
-      flex-shrink: 0;
-    }
-    @keyframes marqueeScroll {
+    @keyframes mq {
       from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
+      to   { transform: translateX(-50%); }
     }
 
-    /* ─── SECTION COMMONS ───────────────────────────── */
-    section { padding: 120px 48px; }
-    .section-label {
-      font-family: 'Syne', sans-serif;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 64px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-    .section-num {
-      color: var(--muted);
-      margin-right: 4px;
-    }
-
-    /* ─── WORK ──────────────────────────────────────── */
+    /* ── WORK SECTION ────────────────────────── */
     #work {
-      border-bottom: 1px solid var(--border);
+      background: var(--off-white);
+      padding: 80px 44px 100px;
     }
-    .work-intro {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(28px, 3.5vw, 46px);
-      font-weight: 300;
-      line-height: 1.25;
-      color: var(--white);
-      max-width: 640px;
-      margin-bottom: 96px;
-    }
-    .work-intro em { font-style: italic; color: var(--accent); }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2px;
-    }
-    .project-row {
-      display: grid;
-      grid-template-columns: 80px 1fr auto;
-      align-items: center;
-      gap: 40px;
-      padding: 36px 0;
-      border-top: 1px solid var(--border);
-      cursor: none;
-      text-decoration: none;
-      color: inherit;
-      position: relative;
-      transition: background 0.3s;
-      group: true;
-    }
-    .project-row:hover { background: var(--off-black); padding-left: 20px; padding-right: 20px; margin: 0 -20px; }
-    .project-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 13px;
-      font-weight: 400;
-      color: var(--muted);
-      letter-spacing: 0.05em;
-    }
-    .project-info { display: flex; flex-direction: column; gap: 6px; }
-    .project-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(20px, 2.5vw, 32px);
-      font-weight: 700;
-      color: var(--white);
-      letter-spacing: -0.01em;
-      transition: color 0.25s;
-    }
-    .project-row:hover .project-title { color: var(--accent); }
-    .project-subtitle {
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 300;
-    }
-    .project-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 6px;
-    }
-    .tag {
-      font-family: 'Syne', sans-serif;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--dim);
-      border: 1px solid var(--mid);
-      padding: 4px 10px;
-    }
-    .project-arrow {
-      font-size: 24px;
-      color: var(--muted);
-      transition: transform 0.3s, color 0.25s;
-    }
-    .project-row:hover .project-arrow { transform: translate(6px, -6px); color: var(--accent); }
-    .project-row:last-child { border-bottom: 1px solid var(--border); }
-
-    /* hover preview card */
-    .preview-card {
-      position: fixed;
-      width: 280px;
-      height: 200px;
-      pointer-events: none;
-      z-index: 50;
-      opacity: 0;
-      transform: scale(0.92) rotate(-1deg);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      overflow: hidden;
-    }
-    .preview-card.active {
-      opacity: 1;
-      transform: scale(1) rotate(1deg);
-    }
-    .preview-card-inner {
-      width: 100%;
-      height: 100%;
-      background: var(--dark);
-      border: 1px solid var(--mid);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 12px;
-      padding: 24px;
-    }
-    .preview-icon {
-      font-size: 42px;
-    }
-    .preview-label {
-      font-family: 'Syne', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--dim);
-      text-align: center;
-    }
-
-    /* ─── TRUSTED BRANDS ────────────────────────────── */
-    #brands {
-      padding: 80px 0;
-      border-bottom: 1px solid var(--border);
-      overflow: hidden;
-      background: var(--off-black);
-    }
-    .brands-header {
-      padding: 0 48px 48px;
-      display: flex;
-      align-items: center;
+    .work-header {
+      display: flex; align-items: baseline;
       justify-content: space-between;
-    }
-    .brands-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(28px, 3vw, 42px);
-      font-weight: 300;
-      color: var(--white);
-    }
-    .brands-title em { font-style: italic; color: var(--accent); }
-    .brands-count {
-      font-family: 'Syne', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.15em;
-      color: var(--muted);
-    }
-    .brands-track-wrap {
-      overflow: hidden;
-      position: relative;
-    }
-    .brands-track-wrap::before,
-    .brands-track-wrap::after {
-      content: '';
-      position: absolute;
-      top: 0; bottom: 0;
-      width: 120px;
-      z-index: 2;
-    }
-    .brands-track-wrap::before { left: 0; background: linear-gradient(to right, var(--off-black), transparent); }
-    .brands-track-wrap::after { right: 0; background: linear-gradient(to left, var(--off-black), transparent); }
-    .brands-track {
-      display: inline-flex;
-      gap: 0;
-      animation: brandsScroll 22s linear infinite;
-    }
-    .brands-track:hover { animation-play-state: paused; }
-    .brand-card {
-      width: 220px;
-      height: 120px;
-      border: 1px solid var(--border);
-      margin: 0 12px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      flex-shrink: 0;
-      transition: border-color 0.3s, background 0.3s;
-      cursor: none;
-    }
-    .brand-card:hover {
-      border-color: var(--accent);
-      background: rgba(201,169,110,0.04);
-    }
-    .brand-letter {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 36px;
-      font-weight: 300;
-      color: var(--off-white);
-      line-height: 1;
-    }
-    .brand-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    @keyframes brandsScroll {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-
-    /* ─── ABOUT / STATEMENT ─────────────────────────── */
-    #about {
-      border-bottom: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
-    }
-    .about-left {}
-    .about-statement {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(32px, 4vw, 56px);
-      font-weight: 300;
-      line-height: 1.15;
-      color: var(--white);
-      margin-bottom: 48px;
-    }
-    .about-statement em { font-style: italic; color: var(--accent); }
-    .about-body {
-      font-size: 14px;
-      line-height: 1.9;
-      color: var(--dim);
-      max-width: 480px;
-    }
-    .about-body p + p { margin-top: 20px; }
-    .about-right {
-      padding-top: 80px;
-    }
-    .skills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-    }
-    .skill-item {
-      border: 1px solid var(--border);
-      padding: 28px 24px;
-      transition: border-color 0.25s, background 0.25s;
-    }
-    .skill-item:hover {
-      border-color: var(--accent);
-      background: rgba(201,169,110,0.03);
-    }
-    .skill-icon {
-      font-size: 22px;
-      margin-bottom: 12px;
-    }
-    .skill-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--white);
-      margin-bottom: 8px;
-    }
-    .skill-desc {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-    .about-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      border-top: 1px solid var(--border);
-      margin-top: 80px;
-    }
-    .stat {
-      padding: 40px 0;
-      border-right: 1px solid var(--border);
-      padding-right: 32px;
-    }
-    .stat:last-child { border-right: none; padding-left: 32px; padding-right: 0; }
-    .stat:nth-child(2) { padding-left: 32px; }
-    .stat-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 56px;
-      font-weight: 300;
-      color: var(--white);
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-    .stat-num span { color: var(--accent); }
-    .stat-label {
-      font-family: 'Syne', sans-serif;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-
-    /* ─── SERVICES ──────────────────────────────────── */
-    #services {
-      border-bottom: 1px solid var(--border);
-    }
-    .services-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: 80px;
-    }
-    .services-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(32px, 4vw, 56px);
-      font-weight: 300;
-      color: var(--white);
-      max-width: 400px;
-      line-height: 1.1;
-    }
-    .services-title em { font-style: italic; color: var(--accent); }
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
-    }
-    .service-card {
-      border: 1px solid var(--border);
-      padding: 40px 32px;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.3s;
-    }
-    .service-card:hover { background: var(--off-black); }
-    .service-card::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 0;
-      height: 2px;
-      background: var(--accent);
-      transition: width 0.4s ease;
-    }
-    .service-card:hover::after { width: 100%; }
-    .service-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 48px;
-      font-weight: 300;
-      color: var(--border);
-      line-height: 1;
-      margin-bottom: 24px;
-    }
-    .service-name {
-      font-family: 'Syne', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 16px;
-      letter-spacing: -0.01em;
-    }
-    .service-desc {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    /* ─── QUOTE/CTA ─────────────────────────────────── */
-    #cta {
-      min-height: 60vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-    }
-    .cta-bg {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center, rgba(201,169,110,0.05) 0%, transparent 70%);
-    }
-    .cta-eyebrow {
-      font-family: 'Syne', sans-serif;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 32px;
-    }
-    .cta-headline {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(42px, 7vw, 96px);
-      font-weight: 300;
-      line-height: 1;
-      color: var(--white);
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
-      position: relative;
-    }
-    .cta-headline em { font-style: italic; color: var(--accent); }
-    .cta-sub {
-      font-size: 15px;
-      color: var(--dim);
       margin-bottom: 52px;
     }
-    .btn-primary {
-      display: inline-block;
-      font-family: 'Syne', sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--black);
-      background: var(--accent);
-      padding: 16px 40px;
-      text-decoration: none;
-      transition: background 0.25s, color 0.25s, transform 0.25s;
-      position: relative;
+    .work-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 500; font-size: 12px;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-muted);
     }
-    .btn-primary:hover {
-      background: var(--white);
-      transform: translateY(-2px);
+    .work-count {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 12px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text-muted);
     }
 
-    /* ─── FOOTER ────────────────────────────────────── */
-    footer {
-      padding: 60px 48px;
+    /* 3-col project grid — matches BASIC reference exactly */
+    .projects-grid {
       display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
     }
-    .footer-left {}
-    .footer-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      font-weight: 300;
-      color: var(--off-white);
-      margin-bottom: 4px;
+    .project-card {
+      display: block; text-decoration: none; cursor: none;
     }
-    .footer-role {
-      font-family: 'Syne', sans-serif;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.15em;
+    .project-img-wrap {
+      position: relative; overflow: hidden;
+      aspect-ratio: 3 / 4;
+      background: #ccc;
+      margin-bottom: 22px;
+    }
+    .project-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform .7s cubic-bezier(.25,.8,.25,1), filter .4s;
+    }
+    .project-card:hover .project-img-wrap img {
+      transform: scale(1.05); filter: brightness(0.82);
+    }
+    /* centre overlay pill */
+    .project-overlay {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity .3s;
+    }
+    .project-card:hover .project-overlay { opacity: 1; }
+    .project-overlay-pill {
+      background: var(--white);
+      font-weight: 700; font-size: 11px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--black); padding: 13px 26px;
+    }
+    .project-client {
+      font-weight: 700; font-size: 22px;
+      letter-spacing: -0.01em; text-transform: uppercase;
+      color: var(--text); margin-bottom: 10px;
+      transition: color .2s;
+    }
+    .project-card:hover .project-client { color: #333; }
+    .project-desc {
+      font-size: 13px; line-height: 1.65;
+      color: var(--text-muted);
       text-transform: uppercase;
-      color: var(--muted);
+      letter-spacing: 0.02em;
+      max-width: 300px;
     }
-    .footer-center {
-      font-family: 'Syne', sans-serif;
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      color: var(--muted);
+
+    /* ── BRANDS CAROUSEL ─────────────────────── */
+    #brands {
+      background: var(--off-white);
+      padding: 70px 44px;
+      border-top: 1.5px solid var(--light-gray);
+      border-bottom: 1.5px solid var(--light-gray);
+    }
+    .brands-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 500; font-size: 11px;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 44px;
+    }
+    .brands-scroll { overflow: hidden; position: relative; }
+    .brands-scroll::before,
+    .brands-scroll::after {
+      content: ''; position: absolute;
+      top: 0; bottom: 0; width: 100px; z-index: 2;
+    }
+    .brands-scroll::before { left: 0; background: linear-gradient(to right, var(--off-white), transparent); }
+    .brands-scroll::after  { right: 0; background: linear-gradient(to left,  var(--off-white), transparent); }
+    .brands-track {
+      display: inline-flex;
+      animation: bq 22s linear infinite;
+    }
+    .brands-track:hover { animation-play-state: paused; }
+    .brand-chip {
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px 38px; margin: 0 10px;
+      border: 1.5px solid #c8c4be;
+      font-weight: 700; font-size: 13px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-muted); white-space: nowrap;
+      min-width: 196px;
+      transition: border-color .25s, color .25s;
+      cursor: none;
+    }
+    .brand-chip:hover { border-color: var(--text); color: var(--text); }
+    @keyframes bq {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── ABOUT ───────────────────────────────── */
+    #about {
+      background: var(--black);
+      padding: 110px 44px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+    }
+    .about-headline {
+      font-weight: 700;
+      font-size: clamp(38px, 5.5vw, 68px);
+      line-height: 1.02; letter-spacing: -0.025em;
+      color: var(--white);
+    }
+    .about-headline em {
+      font-style: italic; font-weight: 400; color: #666;
+    }
+    .about-body {
+      font-size: 15px; line-height: 1.85;
+      color: #666; margin-bottom: 52px;
+    }
+    .about-body p + p { margin-top: 18px; }
+    .about-stats {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      border-top: 1px solid #1e1e1e; padding-top: 36px;
+      gap: 20px;
+    }
+    .stat-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 56px;
+      color: var(--white); line-height: 1; margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 10px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: #444;
+    }
+
+    /* ── SERVICES ────────────────────────────── */
+    #services {
+      background: var(--white);
+      padding: 100px 44px;
+    }
+    .services-headline {
+      font-weight: 900;
+      font-size: clamp(44px, 7vw, 88px);
+      letter-spacing: -0.03em; line-height: 0.92;
+      color: var(--text); margin-bottom: 72px;
+    }
+    .services-headline em { font-style: italic; font-weight: 400; }
+    .services-list { border-top: 1.5px solid #e0ddd8; }
+    .srv-row {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      align-items: center; gap: 28px;
+      padding: 26px 0;
+      border-bottom: 1.5px solid #e0ddd8;
+      transition: padding .2s, background .2s;
+      cursor: none;
+    }
+    .srv-row:hover {
+      background: var(--off-white);
+      padding-left: 14px; padding-right: 14px;
+      margin: 0 -14px;
+    }
+    .srv-n {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; color: #bbb; letter-spacing: 0.04em;
+    }
+    .srv-name {
+      font-weight: 700; font-size: 21px;
+      letter-spacing: -0.01em; text-transform: uppercase;
+    }
+    .srv-tag {
+      font-size: 11px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #bbb;
+    }
+
+    /* ── CTA ─────────────────────────────────── */
+    #cta {
+      background: var(--black);
+      padding: 130px 44px;
       text-align: center;
     }
-    .footer-right {
-      display: flex;
-      justify-content: flex-end;
-      gap: 28px;
+    .cta-sup {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; letter-spacing: 0.24em;
+      text-transform: uppercase; color: #444;
+      margin-bottom: 28px;
     }
-    .footer-link {
-      font-family: 'Syne', sans-serif;
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.25s;
+    .cta-h {
+      font-weight: 900;
+      font-size: clamp(54px, 10vw, 128px);
+      letter-spacing: -0.035em; line-height: 0.88;
+      color: var(--white); margin-bottom: 56px;
     }
-    .footer-link:hover { color: var(--accent); }
+    .cta-h em { font-style: italic; font-weight: 400; color: #555; }
+    .cta-btn {
+      display: inline-block;
+      font-weight: 700; font-size: 13px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--black); background: var(--white);
+      padding: 18px 52px; text-decoration: none;
+      transition: background .25s, transform .25s;
+    }
+    .cta-btn:hover { background: #dedad2; transform: translateY(-2px); }
 
-    /* ─── REVEAL ANIMATIONS ─────────────────────────── */
+    /* ── FOOTER ──────────────────────────────── */
+    footer {
+      background: var(--black);
+      padding: 36px 44px;
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      border-top: 1px solid #181818;
+    }
+    .foot-logo {
+      font-weight: 900; font-size: 15px;
+      letter-spacing: -0.01em; color: var(--white);
+    }
+    .foot-copy {
+      font-size: 11px; letter-spacing: 0.1em;
+      color: #3a3a3a; text-align: center;
+    }
+    .foot-links {
+      display: flex; justify-content: flex-end; gap: 28px;
+    }
+    .foot-link {
+      font-size: 11px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #444;
+      text-decoration: none; transition: color .2s;
+    }
+    .foot-link:hover { color: var(--white); }
+
+    /* ── REVEAL ──────────────────────────────── */
     .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .75s cubic-bezier(.16,1,.3,1),
+                  transform .75s cubic-bezier(.16,1,.3,1);
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.35s; }
-    .reveal-delay-4 { transition-delay: 0.5s; }
+    .reveal.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: .1s; }
+    .d2 { transition-delay: .22s; }
+    .d3 { transition-delay: .36s; }
 
-    /* ─── MOBILE ────────────────────────────────────── */
-    @media (max-width: 900px) {
-      nav { padding: 20px 24px; }
-      .nav-links { display: none; }
-      section { padding: 80px 24px; }
-      #hero { padding: 0 24px 60px; }
-      .hero-bg-text { font-size: 80px; }
-      #about { grid-template-columns: 1fr; gap: 48px; }
-      .about-right { padding-top: 0; }
-      .services-grid { grid-template-columns: 1fr; }
-      footer { grid-template-columns: 1fr; gap: 24px; text-align: center; }
-      .footer-right { justify-content: center; }
-      .project-row { grid-template-columns: 50px 1fr auto; gap: 16px; }
-      .about-stats { grid-template-columns: 1fr; }
-      .stat { border-right: none; border-bottom: 1px solid var(--border); padding: 28px 0; }
-      .stat:last-child { border-bottom: none; }
-      .stat:nth-child(2) { padding-left: 0; }
-      body { cursor: auto; }
-      .cursor, .cursor-ring { display: none; }
+    /* ── RESPONSIVE ──────────────────────────── */
+    @media (max-width: 960px) {
+      .projects-grid { grid-template-columns: 1fr 1fr; }
+      #about { grid-template-columns: 1fr; }
     }
-    @media (max-width: 600px) {
-      .skills-grid { grid-template-columns: 1fr; }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      nav { padding: 22px 24px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      #work, #about, #brands, #services, #cta { padding: 60px 24px; }
+      footer { grid-template-columns: 1fr; gap: 18px; text-align: center; }
+      .foot-links { justify-content: center; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- Custom Cursor -->
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+<div id="cur"></div>
+<div id="cur-ring"></div>
 
-<!-- Preview Card -->
-<div class="preview-card" id="previewCard">
-  <div class="preview-card-inner">
-    <div class="preview-icon" id="previewIcon">🎨</div>
-    <div class="preview-label" id="previewLabel">View Project</div>
-  </div>
-</div>
-
-<!-- ─── NAVIGATION ─────────────────────────────────────── -->
+<!-- ══════════════════════════════════════════════════
+     NAV
+══════════════════════════════════════════════════ -->
 <nav>
-  <a href="#" class="nav-logo">Adriana <span>/</span> Hasbani</a>
+  <a href="#" class="nav-logo">ADRIANA HASBANI®</a>
   <ul class="nav-links">
     <li><a href="#work">Work</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#brands">Clients</a></li>
+    <li><a href="mailto:adriana@hasbani.design">Contact</a></li>
   </ul>
-  <a href="mailto:adriana@hasbani.design" class="nav-cta">Let's Talk</a>
+  <div class="nav-dots">
+    <span></span><span></span><span></span>
+  </div>
 </nav>
 
-<!-- ─── HERO ───────────────────────────────────────────── -->
+<!-- ══════════════════════════════════════════════════
+     HERO — full-bleed Paragon-style athletic image
+══════════════════════════════════════════════════ -->
 <section id="hero">
-  <div class="hero-line hero-line-v hero-line-v-1"></div>
-  <div class="hero-line hero-line-v hero-line-v-2"></div>
-  <div class="hero-bg-text">Design</div>
+  <!--
+    Paragon Fitwear-style hero:
+    Replace src below with your actual Paragon or White Shark screenshot/photo.
+    Recommended: export a hero shot from paragonfitwear.com and upload to /assets/hero.jpg
+  -->
+  <img
+    id="hero-img"
+    src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1920&q=85&auto=format&fit=crop&crop=top"
+    alt="Paragon Fitwear — athletic lifestyle hero"
+  />
+  <div class="hero-overlay"></div>
 
-  <div class="hero-tag">Sr. Web Designer — Available for Projects</div>
-  <h1 class="hero-headline">
-    Crafting digital<br />
-    experiences that<br />
-    <em>move brands</em><br />
-    forward.
-  </h1>
-  <div class="hero-bottom">
-    <p class="hero-desc">
-      Adriana Hasbani is a Senior Web Designer specializing in eCommerce design,
-      brand identity, and conversion-focused digital experiences. Based wherever
-      great work happens.
-    </p>
-    <div class="hero-scroll">
-      <div class="hero-scroll-line"></div>
-      Scroll
-    </div>
-    <div class="hero-year">Est. 2010 · ©2025</div>
+  <!-- Circular VIEW WORK button — mirrors BASIC's WATCH REEL -->
+  <a href="#work" class="hero-btn">
+    <span class="hero-btn-text">VIEW<br>WORK</span>
+  </a>
+
+  <!-- Achievements at bottom-left -->
+  <div class="hero-awards">
+    <div class="hero-award">— eCommerce · Web Design · Ad Campaigns</div>
+    <div class="hero-award">— 10+ Years Building Brands Digitally</div>
+  </div>
+
+  <!-- Brand credit at bottom-center -->
+  <div class="hero-credit">
+    <div class="hero-credit-name">Adriana Hasbani®</div>
+    <div class="hero-credit-sub">Sr. Web Designer · 2010–∞</div>
   </div>
 </section>
 
-<!-- ─── MARQUEE ─────────────────────────────────────────── -->
-<div class="marquee-strip">
-  <div class="marquee-track" aria-hidden="true">
-    <!-- set 1 -->
-    <span class="marquee-item"><span class="dot"></span>Web Design</span>
-    <span class="marquee-item"><span class="dot"></span>eCommerce</span>
-    <span class="marquee-item"><span class="dot"></span>Brand Identity</span>
-    <span class="marquee-item"><span class="dot"></span>Landing Pages</span>
-    <span class="marquee-item"><span class="dot"></span>UI/UX Design</span>
-    <span class="marquee-item"><span class="dot"></span>Display Ads</span>
-    <span class="marquee-item"><span class="dot"></span>Conversion Design</span>
-    <span class="marquee-item"><span class="dot"></span>Visual Strategy</span>
-    <!-- set 2 (duplicate for loop) -->
-    <span class="marquee-item"><span class="dot"></span>Web Design</span>
-    <span class="marquee-item"><span class="dot"></span>eCommerce</span>
-    <span class="marquee-item"><span class="dot"></span>Brand Identity</span>
-    <span class="marquee-item"><span class="dot"></span>Landing Pages</span>
-    <span class="marquee-item"><span class="dot"></span>UI/UX Design</span>
-    <span class="marquee-item"><span class="dot"></span>Display Ads</span>
-    <span class="marquee-item"><span class="dot"></span>Conversion Design</span>
-    <span class="marquee-item"><span class="dot"></span>Visual Strategy</span>
+<!-- ══════════════════════════════════════════════════
+     MARQUEE TICKER
+══════════════════════════════════════════════════ -->
+<div class="mq-wrap" aria-hidden="true">
+  <div class="mq-inner">
+    <span class="mq-item"><span class="mq-dot"></span>Web Design</span>
+    <span class="mq-item"><span class="mq-dot"></span>eCommerce</span>
+    <span class="mq-item"><span class="mq-dot"></span>Display Advertising</span>
+    <span class="mq-item"><span class="mq-dot"></span>Landing Pages</span>
+    <span class="mq-item"><span class="mq-dot"></span>UI / UX</span>
+    <span class="mq-item"><span class="mq-dot"></span>Brand Identity</span>
+    <span class="mq-item"><span class="mq-dot"></span>Conversion Design</span>
+    <span class="mq-item"><span class="mq-dot"></span>Shopify</span>
+    <!-- duplicate for seamless loop -->
+    <span class="mq-item"><span class="mq-dot"></span>Web Design</span>
+    <span class="mq-item"><span class="mq-dot"></span>eCommerce</span>
+    <span class="mq-item"><span class="mq-dot"></span>Display Advertising</span>
+    <span class="mq-item"><span class="mq-dot"></span>Landing Pages</span>
+    <span class="mq-item"><span class="mq-dot"></span>UI / UX</span>
+    <span class="mq-item"><span class="mq-dot"></span>Brand Identity</span>
+    <span class="mq-item"><span class="mq-dot"></span>Conversion Design</span>
+    <span class="mq-item"><span class="mq-dot"></span>Shopify</span>
   </div>
 </div>
 
-<!-- ─── WORK ────────────────────────────────────────────── -->
+<!-- ══════════════════════════════════════════════════
+     WORK — 3-column image cards (matches BASIC ref)
+══════════════════════════════════════════════════ -->
 <section id="work">
-  <div class="section-label reveal">
-    <span class="section-num">01 /</span> Selected Work
+  <div class="work-header reveal">
+    <span class="work-eyebrow">Selected Work</span>
+    <span class="work-count">03 Projects</span>
   </div>
-
-  <p class="work-intro reveal reveal-delay-1">
-    Projects built to <em>perform</em> — from eCommerce storefronts
-    to high-converting ad campaigns and brand-defining redesigns.
-  </p>
 
   <div class="projects-grid">
 
-    <!-- Project 1 -->
-    <a class="project-row reveal"
+    <!-- 1 ─ Lower.com Banner Ads ─────────────── -->
+    <a class="project-card reveal"
        href="https://www.behance.net/gallery/204733483/Banner-Ads-Design"
-       target="_blank"
-       rel="noopener"
-       data-icon="🖼️"
-       data-label="View on Behance">
-      <span class="project-num">01</span>
-      <div class="project-info">
-        <span class="project-title">Lower.com — Banner Ads</span>
-        <span class="project-subtitle">Display advertising campaign · Digital media design</span>
-        <div class="project-tags">
-          <span class="tag">Display Ads</span>
-          <span class="tag">HTML Banners</span>
-          <span class="tag">Campaign Design</span>
+       target="_blank" rel="noopener">
+      <div class="project-img-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=900&q=82&auto=format&fit=crop"
+          alt="Lower.com — Banner Ads project"
+        />
+        <div class="project-overlay">
+          <span class="project-overlay-pill">View on Behance ↗</span>
         </div>
       </div>
-      <span class="project-arrow">↗</span>
+      <div class="project-client">Lower.com</div>
+      <p class="project-desc">
+        A digital advertising campaign delivering high-impact
+        banner designs for a leading mortgage platform
+      </p>
     </a>
 
-    <!-- Project 2 -->
-    <a class="project-row reveal reveal-delay-1"
-       href="#"
-       data-icon="🌐"
-       data-label="Website Redesign">
-      <span class="project-num">02</span>
-      <div class="project-info">
-        <span class="project-title">White Shark Media — Website Redesign</span>
-        <span class="project-subtitle">Full site overhaul for a leading digital marketing agency</span>
-        <div class="project-tags">
-          <span class="tag">Web Design</span>
-          <span class="tag">UX Strategy</span>
-          <span class="tag">Responsive</span>
+    <!-- 2 ─ White Shark Media ────────────────── -->
+    <a class="project-card reveal d1" href="#">
+      <div class="project-img-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&q=82&auto=format&fit=crop"
+          alt="White Shark Media — Website Redesign"
+        />
+        <div class="project-overlay">
+          <span class="project-overlay-pill">View Project ↗</span>
         </div>
       </div>
-      <span class="project-arrow">↗</span>
+      <div class="project-client">White Shark Media</div>
+      <p class="project-desc">
+        A full website redesign for a leading digital marketing
+        agency — elevating brand presence and UX
+      </p>
     </a>
 
-    <!-- Project 3 -->
-    <a class="project-row reveal reveal-delay-2"
-       href="#"
-       data-icon="🛒"
-       data-label="eCommerce Design">
-      <span class="project-num">03</span>
-      <div class="project-info">
-        <span class="project-title">Paragon Fitwear — eCommerce Redesign</span>
-        <span class="project-subtitle">End-to-end eCommerce redesign & ad landing pages</span>
-        <div class="project-tags">
-          <span class="tag">eCommerce</span>
-          <span class="tag">Landing Pages</span>
-          <span class="tag">Conversion CRO</span>
+    <!-- 3 ─ Paragon Fitwear ──────────────────── -->
+    <a class="project-card reveal d2" href="#">
+      <div class="project-img-wrap">
+        <img
+          src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=900&q=82&auto=format&fit=crop"
+          alt="Paragon Fitwear — eCommerce Redesign"
+        />
+        <div class="project-overlay">
+          <span class="project-overlay-pill">View Project ↗</span>
         </div>
       </div>
-      <span class="project-arrow">↗</span>
+      <div class="project-client">Paragon Fitwear</div>
+      <p class="project-desc">
+        eCommerce redesign and high-converting ad landing pages
+        for a performance activewear brand
+      </p>
     </a>
 
   </div>
 </section>
 
-<!-- ─── TRUSTED BRANDS ──────────────────────────────────── -->
+<!-- ══════════════════════════════════════════════════
+     TRUSTED BRANDS
+══════════════════════════════════════════════════ -->
 <div id="brands">
-  <div class="brands-header reveal">
-    <h2 class="brands-title">Trusted by <em>leading brands</em></h2>
-    <span class="brands-count">5 Clients · 10+ Years</span>
-  </div>
-
-  <div class="brands-track-wrap">
+  <p class="brands-label reveal">Trusted By</p>
+  <div class="brands-scroll">
     <div class="brands-track">
-      <!-- Set 1 -->
-      <div class="brand-card">
-        <span class="brand-letter">P</span>
-        <span class="brand-name">Paragon Fitwear</span>
-      </div>
-      <div class="brand-card">
-        <span class="brand-letter">W</span>
-        <span class="brand-name">White Shark Media</span>
-      </div>
-      <div class="brand-card">
-        <span class="brand-letter">L</span>
-        <span class="brand-name">Lower.com</span>
-      </div>
-      <div class="brand-card">
-        <span class="brand-letter">H</span>
-        <span class="brand-name">Heidi Daus</span>
-      </div>
-      <div class="brand-card">
-        <span class="brand-letter">H</span>
-        <span class="brand-name">HoodMart</span>
-      </div>
-      <!-- Set 2 (loop) -->
-      <div class="brand-card">
-        <span class="brand-letter">P</span>
-        <span class="brand-name">Paragon Fitwear</span>
-      </div>
-      <div class="brand-card">
-        <span class="brand-letter">W</span>
-        <span class="brand-name">White Shark Media</span>
-      </div>
-      <div class="brand-card">
-        <span class="brand-letter">L</span>
-        <span class="brand-name">Lower.com</span>
-      </div>
-      <div class="brand-card">
-        <span class="brand-letter">H</span>
-        <span class="brand-name">Heidi Daus</span>
-      </div>
-      <div class="brand-card">
-        <span class="brand-letter">H</span>
-        <span class="brand-name">HoodMart</span>
-      </div>
+      <div class="brand-chip">Paragon Fitwear</div>
+      <div class="brand-chip">White Shark Media</div>
+      <div class="brand-chip">Lower.com</div>
+      <div class="brand-chip">Heidi Daus</div>
+      <div class="brand-chip">HoodMart</div>
+      <!-- duplicate for seamless loop -->
+      <div class="brand-chip">Paragon Fitwear</div>
+      <div class="brand-chip">White Shark Media</div>
+      <div class="brand-chip">Lower.com</div>
+      <div class="brand-chip">Heidi Daus</div>
+      <div class="brand-chip">HoodMart</div>
     </div>
   </div>
 </div>
 
-<!-- ─── ABOUT ────────────────────────────────────────────── -->
+<!-- ══════════════════════════════════════════════════
+     ABOUT
+══════════════════════════════════════════════════ -->
 <section id="about">
-  <div class="about-left">
-    <div class="section-label reveal">
-      <span class="section-num">02 /</span> About
-    </div>
-    <h2 class="about-statement reveal reveal-delay-1">
-      Design that bridges<br />
-      <em>aesthetics</em> and<br />
-      business outcomes.
+  <div>
+    <h2 class="about-headline reveal">
+      Design that<br />turns <em>vision</em><br />into value.
     </h2>
-    <div class="about-body reveal reveal-delay-2">
+  </div>
+  <div>
+    <div class="about-body reveal d1">
       <p>
-        Adriana Hasbani is a Senior Web Designer with over a decade of experience
-        crafting digital experiences that convert. She combines a sharp visual
-        sensibility with a performance-first mindset — ensuring every pixel
-        serves both the brand and the bottom line.
+        Adriana Hasbani is a Senior Web Designer with over a decade
+        of experience crafting digital experiences for brands across
+        fitness, finance, fashion, and marketing.
       </p>
       <p>
-        Her work spans eCommerce storefronts, digital advertising campaigns,
-        full website redesigns, and conversion-optimized landing pages for some
-        of the most recognizable brands in fitness, finance, and fashion.
-      </p>
-      <p>
-        Adriana believes great design is invisible — it simply moves people
-        to act.
+        She bridges the gap between aesthetic craft and business
+        performance — every layout, interaction, and pixel is built
+        to convert, engage, and elevate the brand it represents.
       </p>
     </div>
-
-    <div class="about-stats">
-      <div class="stat reveal">
-        <div class="stat-num">10<span>+</span></div>
-        <div class="stat-label">Years of Experience</div>
+    <div class="about-stats reveal d2">
+      <div>
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Years</div>
       </div>
-      <div class="stat reveal reveal-delay-1">
-        <div class="stat-num">5<span>+</span></div>
-        <div class="stat-label">Brand Partners</div>
+      <div>
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Brands</div>
       </div>
-      <div class="stat reveal reveal-delay-2">
+      <div>
         <div class="stat-num">∞</div>
-        <div class="stat-label">Pixels Perfected</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="about-right">
-    <div class="section-label reveal">
-      <span class="section-num">03 /</span> Capabilities
-    </div>
-    <div class="skills-grid">
-      <div class="skill-item reveal">
-        <div class="skill-icon">🛍️</div>
-        <div class="skill-name">eCommerce Design</div>
-        <div class="skill-desc">Conversion-focused storefronts, PDPs, and checkout flows that drive revenue.</div>
-      </div>
-      <div class="skill-item reveal reveal-delay-1">
-        <div class="skill-icon">📐</div>
-        <div class="skill-name">Web Design</div>
-        <div class="skill-desc">Full-site design systems from wireframe to pixel-perfect delivery.</div>
-      </div>
-      <div class="skill-item reveal reveal-delay-2">
-        <div class="skill-icon">📣</div>
-        <div class="skill-name">Display Advertising</div>
-        <div class="skill-desc">Static and animated banner ads built for performance across all formats.</div>
-      </div>
-      <div class="skill-item reveal reveal-delay-3">
-        <div class="skill-icon">🎯</div>
-        <div class="skill-name">Landing Pages</div>
-        <div class="skill-desc">High-converting ad landing pages engineered for paid traffic campaigns.</div>
-      </div>
-      <div class="skill-item reveal">
-        <div class="skill-icon">🖋️</div>
-        <div class="skill-name">Brand Identity</div>
-        <div class="skill-desc">Visual systems, typography, and guidelines that make brands cohesive.</div>
-      </div>
-      <div class="skill-item reveal reveal-delay-1">
-        <div class="skill-icon">📱</div>
-        <div class="skill-name">Responsive Design</div>
-        <div class="skill-desc">Seamless experiences across mobile, tablet, and desktop at every breakpoint.</div>
+        <div class="stat-label">Pixels</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─── SERVICES ─────────────────────────────────────────── -->
+<!-- ══════════════════════════════════════════════════
+     SERVICES
+══════════════════════════════════════════════════ -->
 <section id="services">
-  <div class="section-label reveal">
-    <span class="section-num">04 /</span> Services
-  </div>
-  <div class="services-header">
-    <h2 class="services-title reveal">
-      What I<br /><em>bring to</em><br />the table.
-    </h2>
-  </div>
-  <div class="services-grid">
-    <div class="service-card reveal">
-      <div class="service-num">01</div>
-      <div class="service-name">Strategy & Discovery</div>
-      <div class="service-desc">User research, competitor analysis, and design strategy that aligns business goals with audience needs before a single screen is designed.</div>
-    </div>
-    <div class="service-card reveal reveal-delay-1">
-      <div class="service-num">02</div>
-      <div class="service-name">Visual Design</div>
-      <div class="service-desc">High-fidelity UI design, design systems, style guides, and component libraries built for scalability and brand consistency.</div>
-    </div>
-    <div class="service-card reveal reveal-delay-2">
-      <div class="service-num">03</div>
-      <div class="service-name">eCommerce Optimization</div>
-      <div class="service-desc">Shopify and custom eCommerce redesigns focused on reducing drop-off, improving UX, and increasing conversion rates.</div>
-    </div>
-    <div class="service-card reveal reveal-delay-3">
-      <div class="service-num">04</div>
-      <div class="service-name">Campaign Design</div>
-      <div class="service-desc">End-to-end creative for digital ad campaigns — from display banners to paid social creatives and email templates.</div>
-    </div>
-    <div class="service-card reveal reveal-delay-1">
-      <div class="service-num">05</div>
-      <div class="service-name">Prototyping & Handoff</div>
-      <div class="service-desc">Interactive prototypes in Figma, thorough developer handoffs, and annotation that makes implementation seamless.</div>
-    </div>
-    <div class="service-card reveal reveal-delay-2">
-      <div class="service-num">06</div>
-      <div class="service-name">Ongoing Design Support</div>
-      <div class="service-desc">Retainer-based design partnership for brands who need a trusted creative eye on their side month after month.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── CTA ──────────────────────────────────────────────── -->
-<section id="cta">
-  <div class="cta-bg"></div>
-  <p class="cta-eyebrow reveal">Open to Collaboration</p>
-  <h2 class="cta-headline reveal reveal-delay-1">
-    Let's build<br />something<br /><em>remarkable.</em>
+  <h2 class="services-headline reveal">
+    What I<br />do <em>best.</em>
   </h2>
-  <p class="cta-sub reveal reveal-delay-2">Have a project in mind? Let's talk about it.</p>
-  <a href="mailto:adriana@hasbani.design" class="btn-primary reveal reveal-delay-3">Start a Conversation →</a>
+  <div class="services-list">
+    <div class="srv-row reveal">
+      <span class="srv-n">01</span>
+      <span class="srv-name">eCommerce Design</span>
+      <span class="srv-tag">Shopify · Custom</span>
+    </div>
+    <div class="srv-row reveal d1">
+      <span class="srv-n">02</span>
+      <span class="srv-name">Website Redesign</span>
+      <span class="srv-tag">Strategy · UI</span>
+    </div>
+    <div class="srv-row reveal d2">
+      <span class="srv-n">03</span>
+      <span class="srv-name">Landing Pages</span>
+      <span class="srv-tag">Paid Traffic · CRO</span>
+    </div>
+    <div class="srv-row reveal">
+      <span class="srv-n">04</span>
+      <span class="srv-name">Display Advertising</span>
+      <span class="srv-tag">Static · Animated</span>
+    </div>
+    <div class="srv-row reveal d1">
+      <span class="srv-n">05</span>
+      <span class="srv-name">Brand Identity</span>
+      <span class="srv-tag">Visual Systems</span>
+    </div>
+    <div class="srv-row reveal d2">
+      <span class="srv-n">06</span>
+      <span class="srv-name">Design Support</span>
+      <span class="srv-tag">Ongoing Retainer</span>
+    </div>
+  </div>
 </section>
 
-<!-- ─── FOOTER ────────────────────────────────────────────── -->
+<!-- ══════════════════════════════════════════════════
+     CTA
+══════════════════════════════════════════════════ -->
+<section id="cta">
+  <p class="cta-sup reveal">Open to New Projects</p>
+  <h2 class="cta-h reveal d1">
+    Let's build<br /><em>something</em><br />great.
+  </h2>
+  <a href="mailto:adriana@hasbani.design" class="cta-btn reveal d2">
+    Start a Conversation
+  </a>
+</section>
+
+<!-- ══════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════ -->
 <footer>
-  <div class="footer-left">
-    <div class="footer-name">Adriana Hasbani</div>
-    <div class="footer-role">Sr. Web Designer</div>
-  </div>
-  <div class="footer-center">
-    © 2025 Adriana Hasbani · All Rights Reserved
-  </div>
-  <div class="footer-right">
-    <a href="https://www.behance.net/gallery/204733483/Banner-Ads-Design" target="_blank" rel="noopener" class="footer-link">Behance</a>
-    <a href="https://linkedin.com" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
-    <a href="mailto:adriana@hasbani.design" class="footer-link">Email</a>
+  <div class="foot-logo">ADRIANA HASBANI®</div>
+  <div class="foot-copy">© 2025 · Sr. Web Designer</div>
+  <div class="foot-links">
+    <a href="https://www.behance.net/gallery/204733483/Banner-Ads-Design"
+       target="_blank" rel="noopener" class="foot-link">Behance</a>
+    <a href="https://linkedin.com" target="_blank" rel="noopener" class="foot-link">LinkedIn</a>
+    <a href="mailto:adriana@hasbani.design" class="foot-link">Email</a>
   </div>
 </footer>
 
-<!-- ─── SCRIPTS ───────────────────────────────────────────── -->
+<!-- ══════════════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════════════ -->
 <script>
-  /* ── Custom Cursor ── */
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
-
+  /* ── Custom cursor ── */
+  const cur  = document.getElementById('cur');
+  const ring = document.getElementById('cur-ring');
+  let mx=0, my=0, rx=0, ry=0;
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top = my + 'px';
+    cur.style.left = mx + 'px';
+    cur.style.top  = my + 'px';
   });
-
-  function animateRing() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
+  (function tick() {
+    rx += (mx - rx) * 0.13;
+    ry += (my - ry) * 0.13;
     ring.style.left = rx + 'px';
-    ring.style.top = ry + 'px';
-    requestAnimationFrame(animateRing);
-  }
-  animateRing();
-
-  document.querySelectorAll('a, button').forEach(el => {
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(tick);
+  })();
+  document.querySelectorAll('a, button, .brand-chip, .srv-row').forEach(el => {
     el.addEventListener('mouseenter', () => {
-      cursor.style.width = '18px';
-      cursor.style.height = '18px';
-      ring.style.width = '56px';
-      ring.style.height = '56px';
+      cur.style.width='20px';  cur.style.height='20px';
+      ring.style.width='64px'; ring.style.height='64px';
     });
     el.addEventListener('mouseleave', () => {
-      cursor.style.width = '10px';
-      cursor.style.height = '10px';
-      ring.style.width = '36px';
-      ring.style.height = '36px';
+      cur.style.width='12px';  cur.style.height='12px';
+      ring.style.width='40px'; ring.style.height='40px';
     });
   });
 
-  /* ── Preview Card ── */
-  const previewCard = document.getElementById('previewCard');
-  const previewIcon = document.getElementById('previewIcon');
-  const previewLabel = document.getElementById('previewLabel');
-
-  document.querySelectorAll('.project-row').forEach(row => {
-    row.addEventListener('mouseenter', e => {
-      previewIcon.textContent = row.dataset.icon || '🎨';
-      previewLabel.textContent = row.dataset.label || 'View Project';
-      previewCard.classList.add('active');
-    });
-    row.addEventListener('mouseleave', () => {
-      previewCard.classList.remove('active');
-    });
-    row.addEventListener('mousemove', e => {
-      previewCard.style.left = (e.clientX + 20) + 'px';
-      previewCard.style.top = (e.clientY - 80) + 'px';
-    });
-  });
-
-  /* ── Scroll Reveal ── */
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
+  /* ── Scroll reveal ── */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        obs.unobserve(e.target);
       }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-  /* ── Nav scroll style ── */
-  const nav = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 60) {
-      nav.style.background = 'rgba(8,8,8,0.92)';
-      nav.style.backdropFilter = 'blur(16px)';
-      nav.style.borderBottom = '1px solid #1a1a1a';
-    } else {
-      nav.style.background = 'transparent';
-      nav.style.backdropFilter = 'none';
-      nav.style.borderBottom = 'none';
-    }
-  });
-
-  /* ── Hero parallax ── */
-  const heroBg = document.querySelector('.hero-bg-text');
-  window.addEventListener('scroll', () => {
-    const y = window.scrollY;
-    if (heroBg) heroBg.style.transform = `translate(-50%, calc(-50% + ${y * 0.25}px))`;
+  /* ── Hero subtle zoom-in on load ── */
+  window.addEventListener('load', () => {
+    const img = document.getElementById('hero-img');
+    if (img) img.style.transform = 'scale(1.04)';
   });
 </script>
 </body>
